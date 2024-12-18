@@ -1,5 +1,5 @@
 const knex = require("./connection.js");
-export const baseRepository = (tableName) => ({
+const baseRepository = (tableName) => ({
   all: async () => knex(tableName),
 
   get: async (id) => {
@@ -7,10 +7,9 @@ export const baseRepository = (tableName) => ({
     return results[0];
   },
 
-  create: async (title, order) => {
-    const results = await knex(tableName)
-      .insert({ title, order })
-      .returning("*");
+  create: async (data) => {
+    console.log(data);
+    const results = await knex(tableName).insert(data).returning("*");
     return results[0];
   },
 
@@ -32,3 +31,4 @@ export const baseRepository = (tableName) => ({
     return knex(tableName).del().returning("*");
   },
 });
+module.exports = baseRepository;
